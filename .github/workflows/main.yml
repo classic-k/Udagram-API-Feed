@@ -3,7 +3,7 @@ name: feedCI
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   build-and-push:
     name: Build docker images
@@ -24,4 +24,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tag: ${{secrets.Docker_Username}}/udagram-api-feed
+          tags: ${{secrets.Docker_Username}}/udagram-api-feed
