@@ -6,6 +6,11 @@ import * as AWS from '../../../../aws';
 import * as c from '../../../../config/config';
 
 const router: Router = Router();
+ interface DT {
+        email: string;
+        reqID: string;
+        // whatever else is in the JWT.
+      }
 export function logger(req: Request, res: Response, next: NextFunction) {
     try {
         const url = req.originalUrl
@@ -23,7 +28,7 @@ console.log(new Date().toLocaleDateString()," Unauthenticated request ","Url: ",
   
     const token = tokenBearer[1];
     
-    return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: any) => {
+    return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: DT) => {
         
         if (err) {
           console.log("Token error: ",new Date().toLocaleDateString(), " URL: ",url)
@@ -53,7 +58,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   }
 
   const token = tokenBearer[1];
-  return jwt.verify(token, c.config.jwt.secret, (err, decoded) => {
+  return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: DT) => {
     if (err) {
       return res.status(500).send({auth: false, message: 'Failed to authenticate.'});
     }
