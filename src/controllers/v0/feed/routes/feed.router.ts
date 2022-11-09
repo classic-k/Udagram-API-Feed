@@ -28,7 +28,7 @@ console.log(new Date().toLocaleDateString()," Unauthenticated request ","Url: ",
   
     const token = tokenBearer[1];
     
-    return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: DT) => {
+    return jwt.verify(token, c.config.jwt.secret, (err: jwt.JsonWebTokenError | jwt.NotBeforeError | jwt.TokenExpiredError | null, decoded: object | string) => {
         
         if (err) {
           console.log("Token error: ",new Date().toLocaleDateString(), " URL: ",url)
@@ -36,7 +36,7 @@ console.log(new Date().toLocaleDateString()," Unauthenticated request ","Url: ",
           return next()
       }
 
-      const {email, reqID} = decoded
+      const {email, reqID} = jwt.decode(token) as {email: string, reqID: string}
       
       console.log(new Date().toLocaleDateString()," Request ", reqID, "User: ",email, "URL: ",url)
       return next();
@@ -58,7 +58,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   }
 
   const token = tokenBearer[1];
-  return jwt.verify(token, c.config.jwt.secret, (err: Error, decoded: DT) => {
+  return jwt.verify(token, c.config.jwt.secret, (err: jwt.JsonWebTokenError | jwt.NotBeforeError | jwt.TokenExpiredError | null, decoded: object | string) => {
     if (err) {
       return res.status(500).send({auth: false, message: 'Failed to authenticate.'});
     }
