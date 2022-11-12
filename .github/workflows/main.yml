@@ -1,4 +1,4 @@
-name: feedCI-main
+name: feedCI
 on:
   workflow_dispatch:
   push:
