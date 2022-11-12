@@ -40,7 +40,7 @@ jobs:
         with:
          github-token: ${{ secrets.GH_TOKEN }}
          number: "${{ needs.dev-branch.outputs.pr-num }}"
-         repo: classic-k/Udagram-Frontend
+         repo: classic-k/Udagram-API-Feed
       - name: pause
         run: sleep 5
       # auto merge pr
