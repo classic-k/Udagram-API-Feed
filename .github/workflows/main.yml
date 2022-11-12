@@ -1,4 +1,4 @@
-name: feedCI
+name: feedCI-dev
 
 on:
   push:
