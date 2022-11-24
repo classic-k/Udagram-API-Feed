@@ -12,7 +12,7 @@ export const s3 = new AWS.S3({
   params: {Bucket: config.aws_media_bucket},
 });
 
-console.log(s3)
+
 // Generates an AWS signed URL for retrieving objects
 export function getGetSignedUrl( key: string ): string {
   
@@ -23,7 +23,7 @@ export function getGetSignedUrl( key: string ): string {
     Expires: signedUrlExpireSeconds,
   });
   
-  console.log(rs)
+
   return rs
 }
 
